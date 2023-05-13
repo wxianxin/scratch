@@ -111,7 +111,6 @@ class Backtest:
         self.visualizer.plot_portfolio_value(self.portfolio, "Portfolio value")
 
         return {"Total return": total_return, "Sharpe ratio": sharpe_ratio}
- 
 
     def get_performance_new(self):
         # Calculate the total return of the portfolio
@@ -119,7 +118,9 @@ class Backtest:
 
         # Calculate the annualized return
         num_trades = len(self.portfolio)
-        trade_duration = (self.portfolio[-1]["Exit date"] - self.portfolio[0]["Entry date"]).days
+        trade_duration = (
+            self.portfolio[-1]["Exit date"] - self.portfolio[0]["Entry date"]
+        ).days
         annualized_return = (1 + portfolio_return) ** (365 / trade_duration) - 1
 
         # Calculate the maximum drawdown
@@ -135,7 +136,10 @@ class Backtest:
         # Calculate the Sharpe ratio
         returns = []
         for i in range(1, len(self.portfolio)):
-            returns.append(self.portfolio[i]["Exit value"] / self.portfolio[i-1]["Entry value"] - 1)
+            returns.append(
+                self.portfolio[i]["Exit value"] / self.portfolio[i - 1]["Entry value"]
+                - 1
+            )
         Sharpe_ratio = np.mean(returns) / np.std(returns)
 
         # Return the performance metrics
@@ -144,7 +148,7 @@ class Backtest:
             "Annualized return": annualized_return,
             "Max drawdown": max_drawdown,
             "Num trades": num_trades,
-            "Sharpe ratio": Sharpe_ratio
+            "Sharpe ratio": Sharpe_ratio,
         }
 
 
@@ -159,9 +163,9 @@ class MovingAverageStrategy:
             return 0
 
         # Calculate the risk based on the difference between the two moving averages
-        short_ma = np.mean(prices["close"][-self.short_window:])
-        long_ma = np.mean(prices["close"][-self.long_window:])
-  
+        short_ma = np.mean(prices["close"][-self.short_window :])
+        long_ma = np.mean(prices["close"][-self.long_window :])
+
         risk = (short_ma - long_ma) / long_ma
         return risk
 
@@ -184,23 +188,23 @@ class MovingAverageStrategy:
 
 
 class RiskManager:
-  def __init__(self, max_risk, stop_loss_pct):
-    self.max_risk = max_risk
-    self.stop_loss_pct = stop_loss_pct
-    
-  def get_position_size(self, prices, risk):
-    # Calculate the value of the trade
-    trade_value = self.max_risk * risk
-    
-    # Calculate the number of shares to buy
-    shares = trade_value / prices["close"]
-    breakpoint()
-    
-    return shares
-  
-  def get_stop_loss_price(self, buy_price):
-    """unused"""
-    return buy_price * (1 - self.stop_loss_pct)
+    def __init__(self, max_risk, stop_loss_pct):
+        self.max_risk = max_risk
+        self.stop_loss_pct = stop_loss_pct
+
+    def get_position_size(self, prices, risk):
+        # Calculate the value of the trade
+        trade_value = self.max_risk * risk
+
+        # Calculate the number of shares to buy
+        shares = trade_value / prices["close"]
+        breakpoint()
+
+        return shares
+
+    def get_stop_loss_price(self, buy_price):
+        """unused"""
+        return buy_price * (1 - self.stop_loss_pct)
 
 
 class Visualizer:
@@ -220,6 +224,7 @@ class Visualizer:
 
     def plot_portfolio_value(self, portfolio, title):
         import pandas as pd
+
         plt.plot(pd.DataFrame(portfolio).set_index("date"))
         plt.title(title)
         plt.xlabel("date")
@@ -235,19 +240,19 @@ if __name__ == "__main__":
     # data = pd.read_csv("data.csv", index_col="date", parse_dates=True)
     data = yf.download("MSFT", "2020-01-01", "2022-01-01")
     data.columns = [x.lower() for x in data.columns]
-    data.index.name = 'date'
-    
+    data.index.name = "date"
+
     risk_manager = RiskManager(max_risk=1e3, stop_loss_pct=0.5)
     visualizer = Visualizer()
-    
+
     backtest = Backtest(
         data, MovingAverageStrategy(20, 50), 10000, risk_manager, visualizer
     )
-    
+
     # visualizer.plot_data(backtest.data, "underlying")
-    
+
     # Run the backtest
     backtest.run()
-    
+
     # Print the performance
     print(backtest.get_performance())

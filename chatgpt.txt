@@ -1,0 +1,46 @@
+How to estimate active buying/selling volume between 2 snapshot in the future market given the bid/ask price and volume, open interest.
+
+
+
+wxianxinreg@gmail.com
+How to estimate active buying/selling volume between 2 snapshot in the future market given the bid/ask price and volume, open interest.
+
+To estimate the active buying and selling volume between two snapshots in the future market, you can use the following approach:
+
+    Calculate the change in open interest between the two snapshots. This will give you an idea of the net number of new contracts that have been added or removed during the period between the snapshots.
+
+    Calculate the total volume traded during the period between the snapshots. This can be done by summing the volume of all the trades that occurred during the period.
+
+    Calculate the total value of the contracts traded during the period by multiplying the volume traded by the average price of the contracts (which can be calculated as the midpoint between the bid and ask prices).
+
+    Divide the total value of the contracts traded by the total volume traded to get the average trade size.
+
+    Multiply the average trade size by the change in open interest to get an estimate of the active buying and selling volume during the period between the snapshots.
+
+It's important to note that this approach is based on the assumption that the change in open interest is a result of new contracts being added or removed, rather than existing contracts being closed out or offset. Additionally, this approach does not take into account any changes in the bid/ask spread or other market conditions that may have affected the volume of trading during the period.
+wxianxinreg@gmail.com
+please elaborate
+
+Sure! Here's a more detailed explanation of the steps involved in estimating active buying and selling volume using open interest, bid/ask price, and volume data:
+
+    Calculate the change in open interest between the two snapshots: Open interest is the total number of outstanding contracts in the market at a given point in time. To calculate the change in open interest between two snapshots, subtract the open interest at the first snapshot from the open interest at the second snapshot. This will give you the net change in open interest between the two snapshots.
+
+For example, if the open interest at the first snapshot is 1000 contracts and the open interest at the second snapshot is 1100 contracts, the net change in open interest would be 100 contracts. This suggests that 100 new contracts were added to the market during the period between the snapshots.
+
+    Calculate the total volume traded during the period between the snapshots: To calculate the total volume traded, sum the volume of all the trades that occurred during the period between the snapshots. This will give you an idea of the total number of contracts that were traded during the period.
+
+For example, if there were 500 trades of 1 contract each during the period between the snapshots, the total volume traded would be 500 contracts.
+
+    Calculate the total value of the contracts traded during the period: To calculate the total value of the contracts traded, multiply the volume traded by the average price of the contracts. The average price can be calculated as the midpoint between the bid and ask prices at the time of each trade.
+
+For example, if the volume traded is 500 contracts and the average price is $50 per contract, the total value of the contracts traded would be $25,000.
+
+    Divide the total value of the contracts traded by the total volume traded to get the average trade size: To calculate the average trade size, divide the total value of the contracts traded by the total volume traded. This will give you an estimate of the average size of each trade that occurred during the period.
+
+For example, if the total value of the contracts traded is $25,000 and the total volume traded is 500 contracts, the average trade size would be $50 per contract.
+
+    Multiply the average trade size by the change in open interest to get an estimate of the active buying and selling volume during the period: To estimate the active buying and selling volume during the period, multiply the average trade size by the change in open interest. This will give you an estimate of the total value of the contracts that were actively bought or sold during the period.
+
+For example, if the average trade size is $50 per contract and the change in open interest is 100 contracts, the active buying and selling volume during the period would be $5,000.
+
+It's important to note that this approach is based on the assumption that the change in open interest is a result of new contracts being added or removed, rather than existing contracts being closed out or offset. Additionally, this approach does not take into account any changes in the bid/ask spread or other market conditions that may have affected the volume of trading during the period.
